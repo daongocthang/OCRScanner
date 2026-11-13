@@ -11,7 +11,7 @@ object SsidParser {
         val ssid = regex.find(text)?.value ?: return null
         return ssid
             .replace(Regex("""[ _]+"""), "_")
-            .replace(Regex("""(?i)_(?:WLAN|Wi[-_]?Fi).*$"""), "")
+            .replace(Regex("""(?i)_[A-Z0-9.]+[:：].*$"""), "")
             .replace(Regex("""(?i)(?:_(?:5G|2.4G))?$"""), "")
             .trim('_')
             .split('_')

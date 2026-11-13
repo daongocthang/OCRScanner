@@ -1,6 +1,5 @@
-package com.runit.ocrscanner.ui
+package com.runit.ocrscanner.ui.utils
 
-import android.content.Context
 import android.view.OrientationEventListener
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

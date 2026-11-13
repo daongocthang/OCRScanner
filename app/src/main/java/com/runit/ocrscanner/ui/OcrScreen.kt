@@ -56,6 +56,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -72,6 +73,10 @@ import com.runit.ocrscanner.ui.theme.BackgroundColor
 import com.runit.ocrscanner.ui.theme.SuccessColor
 import com.runit.ocrscanner.ui.theme.TextColor
 import com.runit.ocrscanner.ui.theme.WarningColor
+import com.runit.ocrscanner.ui.utils.rememberOcrLifecycle
+import com.runit.ocrscanner.ui.utils.rememberPortraitRotation
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.geometry.Offset
 
 @Composable
 fun OcrScreen() {
@@ -111,9 +116,7 @@ fun OcrScreen() {
         }
     )
 
-    var enable by remember {
-        mutableStateOf(true)
-    }
+    val enable = rememberOcrLifecycle()
 
     var text by remember {
         mutableStateOf("")
@@ -222,7 +225,7 @@ fun OcrContent(
     val rotation = rememberPortraitRotation()
 
     var scale by remember {
-        mutableFloatStateOf(2f)
+        mutableFloatStateOf(4f)
     }
 
     var flash by remember {
@@ -433,11 +436,11 @@ private fun InfoOverlay(
         Row(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .offset(y = top - 46.dp)
+                .offset(y = top - 62.dp)
                 .graphicsLayer(rotationZ = rotation)
                 .background(BackgroundColor, RoundedCornerShape(8.dp))
                 .padding(horizontal = 12.dp, vertical = 6.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
 
         ) {
@@ -445,14 +448,21 @@ private fun InfoOverlay(
                 imageVector = if (exists) Icons.Default.Wifi else Icons.Default.CheckCircle,
                 contentDescription = null,
                 tint = iconColor,
-                modifier = Modifier.size(18.dp)
+                modifier = Modifier.size(24.dp)
             )
             Text(
                 text = text,
                 color = TextColor,
                 maxLines = 1,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold
+                fontSize = 38.sp,
+                fontWeight = FontWeight.SemiBold,
+                style = TextStyle(
+                    shadow = Shadow(
+                        color = Color.Black,
+                        offset = Offset(1f, 2f),
+                        blurRadius = 4f
+                    )
+                )
             )
         }
     }
