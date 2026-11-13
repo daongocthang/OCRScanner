@@ -54,6 +54,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -218,6 +219,8 @@ fun OcrContent(
         )
     }
 
+    val rotation = rememberPortraitRotation()
+
     var scale by remember {
         mutableFloatStateOf(2f)
     }
@@ -273,6 +276,7 @@ fun OcrContent(
                     InfoOverlay(
                         text = text,
                         exists = exists,
+                        rotation = rotation,
                         scanArea = scanArea,
                     )
                 }
@@ -414,6 +418,7 @@ private fun ActionMenu(
 private fun InfoOverlay(
     text: String?,
     exists: Boolean,
+    rotation: Float,
     scanArea: ScanArea,
     modifier: Modifier = Modifier
 ) {
@@ -429,6 +434,7 @@ private fun InfoOverlay(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = top - 46.dp)
+                .graphicsLayer(rotationZ = rotation)
                 .background(BackgroundColor, RoundedCornerShape(8.dp))
                 .padding(horizontal = 12.dp, vertical = 6.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),

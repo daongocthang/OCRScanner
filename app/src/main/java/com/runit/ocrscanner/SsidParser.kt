@@ -18,7 +18,7 @@ object SsidParser {
             .take(3)
             .joinToString("_")
             .substringAfterLast('_')
-            .takeLast(6)
+            .takeLast(4)
             .takeIf {
                 it.length > 3 &&
                         !"VIETTEL".contains(it, ignoreCase = true)
