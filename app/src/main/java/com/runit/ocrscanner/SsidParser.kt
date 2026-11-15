@@ -23,6 +23,5 @@ object SsidParser {
                 it.length > 3 &&
                         !"VIETTEL".contains(it, ignoreCase = true)
             }
-            ?.uppercase(Locale.US)
     }
 }

@@ -8,9 +8,6 @@ import android.os.Looper
 import androidx.core.content.FileProvider
 import com.runit.ocrscanner.model.ScanResult
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import java.util.concurrent.Executors
 
 class CsvWriter(context: Context) {
@@ -23,7 +20,12 @@ class CsvWriter(context: Context) {
     ) {
         if (rows.isEmpty()) return
 
-        val snapshot = rows.toList()
+        val snapshot = rows.flatMap { row ->
+            expand(row.code).map {
+                row.copy(code = it)
+            }
+        }.distinctBy { it.code }
+
         executor.execute {
             try {
                 val file = write(snapshot)
@@ -94,6 +96,31 @@ class CsvWriter(context: Context) {
 
     private fun escape(value: String): String =
         "\"${value.replace("\"", "\"\"")}\""
+
+    private fun expand(text: String): List<String> {
+        val subs = mapOf(
+            'Z' to '2',
+            'O' to '0',
+            'S' to '5',
+            'B' to '8',
+            'g' to '9',
+        )
+
+        val results = mutableListOf<String>(text)
+
+        for (i in text.indices) {
+            val size = results.size
+
+            for (j in 0 until size) {
+                val current = results[j]
+                subs[current[i]]?.let {
+                    results.add(current.replaceRange(i, i + 1, it.toString()))
+                }
+            }
+        }
+
+        return results
+    }
 
     fun close() {
         executor.shutdown()
