@@ -142,7 +142,7 @@ fun OcrScreen() {
     }
 
     fun handleOcr(raw: String, cb: (success: Boolean) -> Unit = {}) {
-        text = SsidParser.parse(raw) ?: ""
+        text = SsidParser.parse(raw)?.uppercase() ?: ""
 
         val code = SsidParser.parse(raw)
 
@@ -217,8 +217,8 @@ fun OcrContent(
 ) {
     val scanArea = remember {
         ScanArea(
-            width = 0.9f,
-            height = 0.35f
+            width = 0.85f,
+            height = 0.25f
         )
     }
 

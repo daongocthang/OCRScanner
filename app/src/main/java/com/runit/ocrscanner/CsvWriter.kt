@@ -22,7 +22,7 @@ class CsvWriter(context: Context) {
 
         val snapshot = rows.flatMap { row ->
             expand(row.code).map {
-                row.copy(code = it)
+                row.copy(code = it.uppercase())
             }
         }.distinctBy { it.code }
 
@@ -99,11 +99,12 @@ class CsvWriter(context: Context) {
 
     private fun expand(text: String): List<String> {
         val subs = mapOf(
-            'Z' to '2',
+            '8' to 'B',
             'O' to '0',
             'S' to '5',
             'B' to '8',
-            'g' to '9',
+            'c' to 'e',
+            '2' to 'Z',
         )
 
         val results = mutableListOf<String>(text)
