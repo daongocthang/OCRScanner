@@ -102,7 +102,7 @@ class CsvWriter(context: Context) {
             '8' to 'B',
             'O' to '0',
             'S' to '5',
-            'B' to '8',
+            'g' to 'q',
             'c' to 'e',
             '2' to 'Z',
         )
